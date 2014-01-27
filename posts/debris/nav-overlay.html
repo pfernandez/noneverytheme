@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>nav-overlay</title>
+	<script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
+	<style>
+	    html, body {
+	        margin: 0;
+	        padding: 0;
+	    }
+	    
+	    .nav-overlay {
+	        background-image: url("compass.png"); /*Thanks 2 mwcarruthers @flickr*/
+	        background-size: contain;
+	        background-repeat: no-repeat;
+	        width: 100px;
+	        height:100px;
+	        position: fixed;
+	        bottom: 1em;
+            right: 1em;
+            transition:         all .2s linear; 
+            -o-transition:      all .2s linear; 
+            -moz-transition:    all .2s linear; 
+            -webkit-transition: all .2s linear;
+	    }
+	    
+	    .nav-overlay:hover {
+	        opacity: .8;
+	        cursor: pointer;
+	    }
+	</style>
+	<script>
+        $(document).ready(function(){
+            // Show the map on button click.
+            $(".nav-overlay").click(function(){
+                if( $(".nav-overlay").hasClass("maximized") ) {
+                    $(".nav-overlay").css({
+                        'background-image' : "url('compass.png')",
+                        'width' : '100px',
+                        'height' : '100px'
+                    });
+                    
+                }
+                else {
+                    $(".nav-overlay").css({
+                        'background-image' : "url('mock-timeline.png')",
+                        'width' : '700px',
+                        'height' : '500px'
+                    });
+                }
+                $(".nav-overlay").toggleClass("maximized");
+            });
+        });
+	</script>
+</head>
+
+<body>
+
+
+
+
+<div class="nav-overlay"></div>
+
+</body>
+</html>

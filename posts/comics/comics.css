@@ -1,0 +1,51 @@
+body
+{
+	height:100%;	
+	background-color:white;
+	font-family:Arial;
+}
+
+h1
+{
+	color:#1A1A1A;
+	font-family:Courier New;
+	letter-spacing:3px;
+	text-indent:8px;
+	text-decoration:underline;
+}
+
+input.contentsButton
+{
+	font-family:Arial;
+	font-size:16px;
+	letter-spacing:3px;
+	color:DimGray;
+	cursor:pointer;
+	border:none;
+    background:none;
+}
+
+img.comic
+{
+	height:inherit;
+}
+
+div.comic
+{
+	position:absolute;
+	top:0px;
+	left:0px;
+	padding-left:335px;
+	height:inherit;
+}
+
+div.sideBar
+{
+	position:fixed;
+	height:100%;
+	top:0px;
+	left:0px;
+	padding:16px;
+	background-color:white;
+}
+

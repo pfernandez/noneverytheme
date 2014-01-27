@@ -1,0 +1,52 @@
+/* @pjs preload="bodies/1.jpg, bodies/2.jpg, bodies/3.jpg, bodies/4.jpg,
+                bodies/5.jpg, bodies/6.jpg, bodies/7.jpg, bodies/8.jpg,
+                bodies/9.jpg, bodies/10.jpg, bodies/11.jpg, bodies/12.jpg, 
+                bodies/13.jpg, bodies/14.jpg, bodies/15.jpg, bodies/16.jpg, 
+                bodies/17.jpg, bodies/18.jpg, bodies/19.jpg, bodies/20.jpg, 
+                bodies/21.jpg, bodies/22.jpg, bodies/23.jpg, bodies/24.jpg, 
+                bodies/25.jpg, bodies/26.jpg, bodies/27.jpg, bodies/28.jpg";
+*/
+/*
+                bodies/29.jpg, bodies/30.jpg, bodies/31.jpg, bodies/32.jpg, 
+                bodies/33.jpg, bodies/34.jpg, bodies/35.jpg, bodies/36.jpg, 
+                bodies/37.jpg, bodies/38.jpg";
+*/
+
+PImage img;
+float aPosX;
+float aPosY;
+float bPosX;
+float bPosY;
+int xMax = window.innerWidth;
+int yMax = window.innerHeight;
+int bgColor = 250;
+
+
+
+void setup() {
+	size(xMax, yMax);
+	background(bgColor);
+	stroke(0);
+	rectMode(CENTER);
+	frameRate(10);
+	
+	imageMode(CENTER);
+	aPosX = width/2.0;
+  	aPosY = height/2.0;
+	bPosX = width/2.0;
+  	bPosY = height/2.0;
+}
+
+void draw() {
+	img = loadImage("bodies/" + int(random(1, 29)) + ".jpg");
+    image(img, aPosX, aPosY, xMax, yMax);
+    // fadeOut();
+}
+
+
+ 
+ // adjust tracers
+void fadeOut() {
+	fill(bgColor, .5);
+	rect(width/2, height/2, width, height);
+}

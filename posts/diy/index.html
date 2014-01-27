@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<HTML>
+<head>
+<link rel="stylesheet" type="text/css"
+	href="http://pages.uoregon.edu/fernande/wayland.css"/>
+<title>Processing and MIDI</title>
+</head>
+<body>
+
+<h1>Controlling Processing with a MIDI Keyboard in Ubuntu</h1>
+<div class="blogpost">
+<p>
+One of the coolest things about taking Interactive Digital Arts at the
+University of Oregon this spring was being introduced to the 
+<a href="http://www.processing.org/">Processing</a>
+programming environment. It's open source, easy to get started with,
+and provides the simplest way I've seen to quickly get interactive
+animations up on the screen. I've been interested in experimental
+music since forever, and lately I've been thinking about ways to
+combine sound with visualizations in a way that is immediately
+immersive and intuitive to use, while at the same time being more
+interactive than, say, an ITunes animation using beat detection.</p>
+
+<h2>The Hardware</h2>
+
+<p>
+For this project I wanted to focus on controllers; something that I
+could use to interact with both sound and visuals simulataneously. I
+thought about building a custom controller using an Arduino or maybe
+a hacked computer keyboard, and while both could produce really
+unique results, they wouldn't be very flexible or reproducible
+without an awful lot of work. I also considered using a Wiimote, but
+while someone <em>has</em> written a Wiimote library, it seemed very 'alpha.'
+I wanted something solid and useable without a lot of headaches. It
+took me two days to realize that I had a dusty M-Audio Oxygen49 MIDI
+keyboard leaning up against the side of my desk the whole time!
+</p>
+</br>
+<a href="keyboard.jpg" target="blank">
+<img src="keyboard.jpg"></a>
+</br>
+<p>
+It's got rows of assignable rotary knobs, buttons and sliders, and
+although it wasn't immediately clear just how those would translate
+to manipulation of graphics on a comupter screen, there was enough
+suggestion of possiblity to be exciting.
+</p>
+
+<h2>The Software</h2>
+
+<p>A little googling yeilded the materials I needed: a solid Processing 
+library called
+<a href="http://ruinwesen.com/blog?id=95">rwmidi</a>
+with decent 
+<a href="http://ruinwesen.com/support-files/rwmidi/documentation/sketch1.html">documentation</a>. 
+I also found a good example of how it might be used, and what the corresponding 
+<a href="https://github.com/mistercrunch/MidiVisualization">code</a>
+might look like. Although this isn't quite how <em>I</em> imaginged using it,
+it's pretty darn cool nonetheless. Check it out:</p>
+</br>
+<center>
+<iframe src="http://player.vimeo.com/video/9093095" width="520" height="390" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
+</center>
+</br>
+<p>
+There was no guarantee that it was going to work on my favored OS, Ubuntu
+11.10, but after dropping it into my newly created sketchbook ->
+libraries folder, I was good to go (installing Processing on Ubuntu
+in the first place was another matter; for more on that, start 
+<a href="http://forum.processing.org/#topic/25080000000022092">here</a>.
+I had to replace Processing's included Java package with the 
+<a href="http://www.java.com/en/download/index.jsp">latest
+version</a> 
+from the Sun website.)
+</p>
+
+<h2>The Code</h2>
+
+<p>
+I needed a good code snippet to get started with, so I grabbed the sample
+code on the rwmidi website, and toyed with it until I got all of the
+functionality I was looking for.</p>
+
+<pre>
+import rwmidi.*;
+
+MidiInput input;
+MidiOutput output;
+int maxNote = 84;
+int minNote = 36;
+int numNotes = maxNote-minNote;
+int notePlayed = (maxNote+minNote)/2;
+
+void setup() {
+  size(800, 600);
+  background(notePlayed);
+  println(&quot;Midi device list:&quot;);
+  println(RWMidi.getInputDeviceNames());
+  input = RWMidi.getInputDevices()[0].createInput(this);
+  output = RWMidi.getOutputDevices()[0].createOutput();
+  println(&quot;Input: &quot; + input.getName());
+  println(&quot;Output: &quot; + output.getName());
+}
+
+void noteOnReceived(Note note) {
+  notePlayed = note.getPitch();
+  println(&quot;Note on: &quot; + note.getPitch() + &quot;, velocity: &quot; + note.getVelocity());
+}
+
+void noteOffReceived(Note note) {
+  println(&quot;Note off: &quot; + note.getPitch());
+}
+
+void controllerChangeReceived(Controller controller) {
+  println(&quot;CC: &quot; + controller.getCC() + &quot;, value: &quot; + controller.getValue());
+}
+
+void draw() {
+  background(255*(notePlayed-minNote)/(numNotes));
+}
+</pre>
+
+<h2>The Results</h2>
+
+<p>
+Basically I just wanted to get Processing to show a number every 
+time I pressed a key, twiddled a knob, etc. Later I can use those
+input values to control, say, the diameter of a sphere or height 
+of a sine wave. In MIDI, the input values are integers that vary 
+from 0 to 127.  Here's what the output looks like on Processing's 
+command line:
+</p>
+</br>
+<a href="commandwindow.png" target="blank">
+<img src="commandwindow.png" style="width:100%"></a>
+</br>
+<p>
+My test script also has a very simple "draw" command that changes
+the window to a different shade of gray depending on which key 
+is pressed. Here's "middle C:"
+</p>
+</br>
+<a href="drawwindow.png" target="blank">
+<img src="drawwindow.png"></a>
+</br>
+<p>
+Still not quite an "immersive visual experience," I admit. 
+Looks like it's time to get creative!
+</p>
+<p>
+<br />
+<b>Update:</b>
+<br />
+Check out the progress of an app I've been working on using
+midi control
+<a href="http://pages.uoregon.edu/fernande/252/project2/" >here</a>.
+</br>
+</p>
+</br></br>
+</div>
+<h3 align="right">
+Paul Fernandez 2012: fernande@uoregon.edu
+</h3>
+</body>
+</html>

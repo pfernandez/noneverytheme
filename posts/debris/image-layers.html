@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Image Layers</title>
+<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+<style>
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        background: #777;
+    }
+    
+    .image-layers ul {
+        position: relative;
+        list-style-type: none;
+    }
+    
+    .image-layers li {
+        display: inline-block;
+        background: #fff;
+    }
+    .image-layers img {
+        height:500px;
+    }
+  
+</style>
+<script>
+    $(document).ready(function(){
+        
+        $(".image-layers ul").css({
+            "height" : $(".image-layers li:first-of-type").outerHeight(),
+        });
+        
+        $(".image-layers li").css({
+            "position" : "absolute",
+            "top" : "0",
+            "left" : "0",
+        });
+        
+        $(".image-layers a").click(function() {
+        /*
+            $(".image-layers li:not("+$(this).attr('href')+") img")
+                .animate({ opacity: 0.0}, 500, function() {
+                    $(this).css("z-index", "1");
+                    $(this).animate({ opacity: 0.25}, 500);
+                });
+                
+            $(".image-layers "+$(this).attr('href')+" img")
+                .animate({ opacity: 0.0}, 500, function() {
+                    $(this).css("z-index", "2");
+                    $(this).animate({ opacity: 1.0}, 500);
+                });
+            */
+            
+            $(".image-layers li:not(:hidden)").fadeOut();
+            $(".image-layers "+$(this).attr('href')).fadeIn();
+            
+            //$(".image-layers li:not("+$(this).attr('href')+")").animate({ "z-index": 1}, 500, function() {});
+            //$(".image-layers "+$(this).attr('href')).animate({ "z-index": -99}, 500, function() {});
+        });
+    });
+</script>
+<style>
+
+</style>
+</head>
+
+<body>
+
+    <h1>Image Layering</h1>
+    <div class="image-layers">
+        <ul>
+            <li id="layer1">
+                <img src="skin.jpg" alt="Skin">
+                <p>Some text about image one goes here.</p>
+            </li>
+            <li id="layer2">
+                <img src="muscles.jpg" alt="Muscles">
+                <p>Some additional text about image two goes here.</p>
+            </li>
+            <li id="layer3">     
+                <img src="skeleton.jpg" alt="Bones">
+                <p>Finally, a few words about image three go here.</p>
+            </li>
+        </ul>
+        <a href="#layer1">Image One</a>
+        <a href="#layer2">Image Two</a>
+        <a href="#layer3">Image Three</a>
+    </div>
+    <h1>The next section.</h1>
+</body>
+</html>

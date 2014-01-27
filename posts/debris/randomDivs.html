@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Random Divs</title>
+</script>
+<script type="text/javascript">
+
+window.onload = function() {
+
+    for (i=0; i<30; i++) {
+        var div = document.createElement("div");
+        div.setAttribute("class", "newDiv");
+        document.body.appendChild(div);
+        var windowWidth  = window.innerWidth;
+        var windowHeight = window.innerHeight;
+        var width  = windowWidth * Math.random();
+        var height = windowHeight * Math.random();
+        var left   = (windowWidth - width) * Math.random();
+        var top    = (windowHeight - height) * Math.random();
+        div.style.width  = 50 * Math.random() + "%";
+        div.style.height = 50 * Math.random() + "%";
+        div.style.left   = 50 * Math.random() + "%";
+        div.style.top    = 50 * Math.random() + "%";
+        var transform1 = "perspective(500)";
+        var transform2 = "rotateY(" + ( 180 * Math.random() ) + "deg)";
+        var transform3 = "rotateX(" + ( 180 * Math.random() ) + "deg)";
+        //div.style.webkitTransform = transform1 + transform2 + transform3;
+        var red   = Math.floor( 255 * Math.random() );
+        var green = 255;//.floor( 255 * Math.random() );
+        var blue  = 255; //Math.floor( 255 * Math.random() );
+        div.style.backgroundColor = "rgb(" + red + "," + green + "," + blue + ")";
+        div.innerHTML = "This Rulz";
+        var id = "div" + i;
+        div.setAttribute("id", id);
+        document.getElementById(id).onmouseover = function(event) { 
+            this.style.webkitTransform = transform1 + transform2 + transform3;
+        };
+        div.onmouseout = function(event) { 
+            this.style.webkitTransform = "";
+        };
+    }console.log(div);
+}
+
+</script>
+<style>
+
+html, body {
+	margin:0;
+	padding:0;
+    width: 100%;
+    height: 100%;
+    background-color: Orange;
+}
+
+.newDiv {
+    display: inline-block;
+    box-sizing: border-box;
+    position: absolute;
+    background-color: DarkOrange;
+    opacity: 0.8;
+    border: solid Black;
+    -webkit-box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    4px 4px 5px rgba(50, 50, 50, 0.75);
+    box-shadow:         4px 4px 5px rgba(50, 50, 50, 0.75);
+    text-align: center;
+    font: 100px Impact;
+    -webkit-transition: all 1s ease-in-out;
+    -moz-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
+}
+
+</style>
+</head>
+<body>
+</body>
+</html>

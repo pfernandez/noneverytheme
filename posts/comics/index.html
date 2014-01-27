@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<script type="text/javascript" src="jquery.mousewheel.js"></script>
+<script type="text/javascript" src="detectmobilebrowser.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		//Get the page back to upper left upon refresh.
+		$(function() {
+			window.scrollTo(0,0);
+			$("body").animate({scrollTop:0, scrollLeft:0}, "fast");
+		});
+		
+		//Hide scrollbars, but maintain mousewheel and trackpad functionality.
+		$(function() {
+			// uncomment to hide scrollbars
+			//$("html, body").css("overflow", "hidden");
+			$("html, body").mousewheel(function(event, delta) {
+				this.scrollLeft -= (delta * 30);
+			});
+		});
+
+		hidden = false;
+
+		//Enable tap-to-hide/show sidebar for mobile devices.
+		if (jQuery.browser.mobile) {
+			$("input.contentsButton").css("height","125");
+			$("input.contentsButton").css("border","solid");
+			$("input.contentsButton").css("width","100%");
+			$(window, "div.sideBar").click(function() {
+				var hideWidth;
+				if (hidden) {
+					$("div.sideBar").show("slide", {direction:"left"});
+					hidden = false;
+				}
+				else {
+					$("div.sideBar").hide("slide", {direction:"left"});
+					hidden = true;
+				}
+			});
+		}
+
+		//Hide contents bar when scrolling forward, show when scrolling back.
+		x = 0;
+		scrlBkCount = 0;
+		$(window).scroll(function() {
+			var windowX, hideWidth, scrollingForward, scrollingBack;
+			windowX   = window.pageXOffset;
+			scrollingForward = (windowX > x && x != 0);
+			scrollingBack    = (windowX < x && x != 0);
+			if (!hidden && scrollingForward) {
+				$("div.sideBar").hide("slide", {direction:"left"});
+				hidden = true;
+				scrlBkCount = 0;
+			}
+			else if (hidden && scrollingBack) {
+				scrlBkCount++;
+				if (scrlBkCount >= 2) {
+					$("div.sideBar").show("slide", {direction:"left"});
+					hidden = false;
+					scrlBkCount = 0;
+				}
+			}
+			x = windowX;
+		});
+
+		//Change cursor to "move" icon to indicate drag-scroll funtionality.
+		$("div.comic").mouseover(function() {
+			$("div.comic").css("cursor", "move");
+		});
+		$("div.comic").mouseout(function() {
+			$("div.comic").css("cursor", "auto");
+		});
+		
+		//Change page title and display the selected comic image.
+		$(".contentsButton").click(function() {
+			$("title").html(this.value);
+			$("div.comic").html("<img class='comic' src=" + this.name + ">");
+			window.scrollTo(0,0);
+		});
+	});
+</script>
+<link rel="stylesheet" type="text/css" href="comics.css" />
+<title>Comics by Paul Fernandez</title>
+</head>
+<body>
+	<script type="text/javascript" src="dragscroll.js"></script>
+	<script type="text/javascript">
+		DragScroll.options("notoggle nostatus nomousewheel");
+	</script>
+	<div class="comic">
+		<img class="comic" src="speedometer.jpg"
+			alt="Latest Comic Goes Here.">
+	</div>
+	<div class="sideBar">
+		<img src="arctic_skua2-transparent.png">
+		</br>
+		<h1>Contents</h1>
+		<input type="submit" class="contentsButton"
+			value="Concerning Speedometers" name="speedometer.jpg">
+		</br></br>
+		<input type="submit" class="contentsButton"
+			value="Scrapbook Journal" name="scrapbook.jpg">
+	</div>
+</body>
+</html>

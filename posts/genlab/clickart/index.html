@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>clickart</title>
+	<script type="text/javascript" src="processing-1.4.1.min.js"></script>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script type="text/javascript">
+	    
+		$(document).ready(function() {
+			//Change page title and display the selected sketch.
+			var p = null;
+			function newSketch(pdeFile) {
+				if(p) {
+          			p.exit();
+          			delete p;
+        		}
+				var fileRequest = new window.XMLHttpRequest();
+				pdeFile += "?bustCache=" + Math.random();
+				fileRequest.open("GET", pdeFile, false);
+          		fileRequest.send(null);
+          		var canvas = $("#sketchCanvas")[0];
+				p = new Processing(canvas, fileRequest.responseText);
+			}
+			
+			// Start a sketch and display stop button.
+			$(".button").click(function() {
+				newSketch(this.id);
+				$("#stopButton").show(200);
+			});
+			
+			// Stop the sketch and hide stop button.
+			$("#stopButton").click(function() {
+			        p.noLoop();
+				$("#stopButton").hide(200);
+			});
+			
+			// Hide/show menu and contact divs when canvas is clicked.
+			$("#under").click(function () {
+			    if ($("#over").css("left") == '0px' )
+			        $("#over").animate({left: '-='+$("#over").outerWidth()}, 300);
+			    else
+			        $("#over").animate({left: '+='+$("#over").outerWidth()}, 300);
+			});
+		});
+	</script>
+	<style>
+	    body, html {
+	        margin: 0;
+	        padding: 0;
+	    }
+	    
+        #over{
+            max-width: 300px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            z-index: 1;
+            padding: 0px 20px 20px;
+            font-family: Futura, Helvetica, sans-serif;
+            background-color: rgba(255, 255, 255, .9);
+            border-right: 1px dotted DimGray;
+        }
+        
+        #under {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background-color: dimgray;
+        }
+        
+        .button {
+            color: DimGray;
+            margin-top: 7px;
+            background: rgba(255, 255, 255, 0);
+        }
+        
+        .button:hover {
+            color: Gray;
+            cursor: pointer;
+        }
+        
+        #stopButton {
+            display: none;
+            color: red;
+        }
+        
+        #stopButton:hover {
+            color: pink;
+        }
+        
+        .underline {
+            display: inline-block;
+            border-bottom: 1px dotted DimGray;
+        }
+        
+        h2 {
+            color: DimGray;
+        }
+        
+        h3 {
+            margin: 0;
+        }
+        
+        hr {
+            border: 1px dotted DimGray;
+        }
+	</style>
+</head>
+
+
+<body>
+	<div id="over">
+		<h1>CLICK&bull;ART</h1>
+		<h2>Click for generative art.</h2>
+		<hr />
+        <h3>Bodies</h3>
+        <ul class="buttonList">
+            <li><span class="button underline" id="bodies/bodies-1.pde">Iteration 1</span></li>
+            <li><span class="button underline" id="bodies/bodies-2.pde">Iteration 2</span></li>
+        </ul>
+		<hr />
+		<p>
+		    Click anywhere on the canvas to hide/show this menu.
+		</p>
+		<h4 id="stopButton"><span class="underline">Stop</span></h4>
+		<script type="text/javascript" src="http://embed-script.branch.com/assets/embed/embed.m.js?body=0" data-branch-embedid="QT2CLFV_vn0" ></script>
+<noscript><a href="http://branch.com/b/body-series">Body series</a></noscript>
+
+	</div>
+	<div id="under">
+		<canvas id="sketchCanvas"></canvas>
+	</div>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="processing-1.3.6.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+		
+			// Variables used in more than one function.
+			var p = null;
+			var paused = false;
+
+			// Change page title and display the selected sketch.
+			function newSketch(pdeFile) {
+				if(p) {
+          			p.exit();
+          			p = null;
+          			paused = false;
+        		}
+				var fileRequest = new window.XMLHttpRequest();
+				fileRequest.open("GET", pdeFile, false);
+          		fileRequest.send(null);
+          		var canvas = $("#sketchCanvas").get(0);
+				p = new Processing(canvas, fileRequest.responseText);
+			}
+			
+			// Load a new sketch when a button is clicked.
+			$(".contentsButton").click(function() {
+				newSketch(this.name);
+			});
+			
+			// Uncomment to load a default sketch upon intial page load.
+			//$(newSketch("project3_1.pde"));
+	
+			// Hide/show menu and contact divs when canvas is clicked.
+			$("#under").click(function () {
+			  $("#over").toggle("slow");
+			  $("#bottomRight").toggle("slow");
+			});
+			
+			// Pause/play animation upon keypress.
+			$("body").keypress(function() {
+				if(p) {
+					paused = ! paused;
+					if(paused)
+						p.noLoop();
+					else
+						p.loop();
+				}
+			});
+		
+			// Hide cursor if not in use while over canvas.
+			//    (Thanks to http://jsfiddle.net/NmKNC/ for this)
+			var timeOut;
+			var justHidden = false;
+			$("#under").mousemove(function() {
+				if (!justHidden) {
+				    justHidden = false;
+				    console.log("move");
+				    clearTimeout(timeOut);
+				    $("#under").css({cursor: "default"});
+				    timeOut = setTimeout(hide, 1000);
+				}
+			});
+			function hide() {
+				$("#under").css({cursor: "none"});
+				justHidden = true;
+				setTimeout(function() {
+					justHidden = false;
+				}, 500);
+			}
+		});
+	</script>
+	
+	<style>
+		body {
+			background-color: rgb(200, 235, 255);
+			color: #333333;
+			font-family: Century Gothic, sans-serif;
+		}
+		h1 {
+			color: rgb(107, 66, 38);
+		}
+		a {
+			color: Green;
+		}
+		#warning {
+			font-weight: bold;
+		}
+		#over {
+			max-width: 25%;
+			position: absolute;
+			top: 2%;
+			left: 2%;
+			z-index: 1;
+			padding: 0% 2% 1% 2%;
+			background-color: rgba(255, 255, 255, .9);
+			border-radius: 5px;
+		}
+		#under {
+			top: 0%;
+			left: 0%;
+			margin: 0;
+			padding: 0;
+			position: absolute;
+			z-index: -1;
+		}
+		#bottomRight {
+			position: absolute;
+			bottom: 0%;
+			right: 2%;
+			z-index: 1;
+			opacity: 0.9;
+			font-style: italic;
+		}
+		#buttonList {
+			list-style-type: decimal;
+			padding-top: 2%;
+			padding-bottom: 2%;
+		}
+		input.contentsButton {
+			text-align: left;
+			font-size: 97%;
+			text-decoration: underline;
+			white-space: normal;
+			padding: 1.5%;
+			color: Green;
+			cursor: pointer;
+			border: none;
+			background: none;
+		}
+	</style>
+	
+	<title>Project 3</title>
+</head>
+
+<body>
+	<div id="over">
+		<h1>Variations on the Recursive Tree.</h1>
+		<p>All of these sketches are based on a
+		<a href="http://processingjs.org/learning/topic/tree/">Processing example</a> 
+		originally written by Daniel Shiffman. Each is randomly generated, so a link will produce a different sketch each time it is clicked.</p>
+		<p>
+			<span id="warning">Slow computers beware: </span>
+			these are computationally intensive animations.
+		</p>
+		<ul id="buttonList">
+			<li><input type="submit" class="contentsButton"
+				value="Random symmetric growth" name="project3_1.pde"></li>
+			<li><input type="submit" class="contentsButton"
+				value="Asymmetric with blossoms" name="project3_2.pde"></li>
+			<li><input type="submit" class="contentsButton"
+				value="Secondary rotations" name="project3_3.pde"></li>
+			<li><input type="submit" class="contentsButton"
+				value="Unlimited rotations" name="project3_4.pde"></li>
+			<li><input type="submit" class="contentsButton"
+				value="Temporal extrusions" name="project3_5.pde"></li>
+			<li><input type="submit" class="contentsButton"
+				value="Explosive deconstruction" name="project3_6.pde"></li>
+			<li><input type="submit" class="contentsButton"
+				value="Softening" name="project3_7.pde"></li>
+			<li><input type="submit" class="contentsButton"
+				value="Symmetric expansion" name="project3_8.pde"></li>
+			<li><input type="submit" class="contentsButton"
+				value="Spirals" name="project3_9.pde"></li>
+			<li><input type="submit" class="contentsButton"
+				value="Compound vortices" name="project3_10.pde"></li>
+		</ul>
+
+		<p>Once an animation has begun, click anywhere on the canvas to hide/show this menu, or press any key to pause/play.</p>
+	</div>
+	<div id="under">
+		<canvas id="sketchCanvas"></canvas>
+	</div>
+	<div id="bottomRight">
+		<h4>fernande@uoregon.edu</h4>
+	</div>
+</body>
+</html>

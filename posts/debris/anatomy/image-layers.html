@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Image Layers</title>
+<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+<style>
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        background: #777;
+    }
+    
+    .image-layers ul {
+        max-width: 1500px;
+    }
+    
+    .image-layers ul {
+        margin: 0;
+        padding: 0;
+        position: relative;
+        list-style-type: none;
+    }
+    
+    .image-layers li {
+        position: relative;
+        background: #fff;
+    }
+    
+    .image-layers img {
+        max-width: 100%;
+    }
+    
+    .image-layers #labels {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+  
+</style>
+<script>
+    $(document).ready(function(){
+        
+        // Match <li> dimensions to its contents.
+        function setLayerSize() {
+            $(".image-layers ul").css({
+                "height" : $(".image-layers li:first-of-type").outerHeight(),
+                "background-color" : "#fff"
+            });
+        }
+        $('.image-layers #layer1 img').load(function() { setLayerSize() });
+        $(window).resize(function() { setLayerSize() });
+        
+        // Stack layers on top of each other.
+        $(".image-layers li").css({
+            "position" : "absolute",
+            "top" : "0",
+            "left" : "0",
+        });
+        
+        // Hide all but the top image.
+        $(".image-layers li:not(:first-of-type)").hide();
+        
+        // Fade in/out layers when link is clicked.
+        $(".image-layers a").click(function() {
+            if ($(this).attr("href") == "#labels") {
+                $(".image-layers #labels").fadeToggle();
+                console.log($(".image-layers #labels"));
+            }
+            else {
+                $(".image-layers li:not(:hidden)").fadeOut();
+                $(".image-layers "+$(this).attr('href')).fadeIn();
+            }
+        });
+    });
+</script>
+<style>
+
+</style>
+</head>
+
+<body>
+
+    <h1>Image Layering</h1>
+    <div class="image-layers">
+        <ul>
+            <li id="layer1">
+                <img src="teezorr-skin.png" alt="Skin">
+                <img id="labels" src="teezorr-skin-labels.png" alt="Skin Labels">
+                <p>Some text about image one goes here.</p>
+            </li>
+            <li id="layer2">
+                <img src="teezorr-muscles.png" alt="Muscles">
+                <img id="labels" src="teezorr-muscles-labels.png" alt="Muscle Labels">
+                <p>Some additional text about image two goes here.</p>
+            </li>
+            <li id="layer3">     
+                <img src="teezorr-skeleton.png" alt="Bones">
+                <img id="labels" src="teezorr-skeleton-labels.png" alt="Bone Labels">
+                <p>Finally, a few words about image three go here.</p>
+            </li>
+        </ul>
+        <a href="#layer1">Skin</a>
+        <a href="#layer2">Muscles</a>
+        <a href="#layer3">Bones</a>
+        <a href="#labels">Show/hide labels</a>
+    </div>
+    
+    <h1>The next section.</h1>
+</body>
+</html>

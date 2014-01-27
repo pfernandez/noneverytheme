@@ -1,0 +1,158 @@
+@import url(http://fonts.googleapis.com/css?family=Delius);
+
+/*
+ * Shared Properties
+ */
+
+.arrow-top,
+.arrow-top-right,
+.arrow-top-left,
+.arrow-right,
+.arrow-bottom,
+.arrow-left {
+	position: relative;
+	background: #fff;
+    border: 1px solid #000;
+    margin: 30px;
+    width: 200px ;
+    height: 200px;
+    border-radius: 7%;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    padding: 2%;
+    box-sizing: border-box;
+    font-family: Delius, cursive;
+}
+
+.arrow-top:after, .arrow-top:before,
+.arrow-top-right:after, .arrow-top-right:before,
+.arrow-top-left:after, .arrow-top-left:before,
+.arrow-right:after, .arrow-right:before,
+.arrow-bottom:after, .arrow-bottom:before,
+.arrow-left:after, .arrow-left:before {
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.arrow-top:after,
+.arrow-top-right:after,
+.arrow-top-left:after,
+.arrow-right:after,
+.arrow-bottom:after,
+.arrow-left:after {
+	border-color: rgba(255, 255, 255, 0);
+	border-width: 20px;
+}
+
+.arrow-top:before,
+.arrow-top-right:before,
+.arrow-top-left:before,
+.arrow-right:before,
+.arrow-bottom:before,
+.arrow-left:before {
+	border-color: rgba(0, 0, 0, 0);
+	border-width: 21px;
+}
+
+
+/*
+ * Unique properties
+ */
+
+.arrow-top:after, .arrow-top:before,
+.arrow-top-right:after, .arrow-top-right:before,
+.arrow-top-left:after, .arrow-top-left:before {
+	bottom: 100%;
+}
+
+.arrow-top:after,
+.arrow-top-right:after,
+.arrow-top-left:after {
+	border-bottom-color: #fff;
+	
+	margin-left: -20px;
+}
+
+.arrow-top:after{
+    left: 50%;
+}
+
+.arrow-top-right:after {
+    left: 75%;
+}
+
+.arrow-top-left:after {
+    left: 25%;
+}
+
+.arrow-top:before {
+	border-bottom-color: #000;
+
+	margin-left: -21px;
+}
+
+.arrow-top:before {
+	left: 50%;
+}
+
+.arrow-top-right:before {
+    left: 25%;
+}
+
+.arrow-top-left:before {
+    left: 75%;
+}
+
+
+.arrow-right:after, .arrow-right:before {
+	left: 100%;
+}
+
+.arrow-right:after {
+	border-left-color: #fff;
+	top: 50%;
+	margin-top: -20px;
+}
+
+.arrow-right:before {
+	border-left-color: #000;
+	top: 50%;
+	margin-top: -21px;
+}
+
+
+.arrow-bottom:after, .arrow-bottom:before {
+	top: 100%;
+}
+
+.arrow-bottom:after {
+	border-top-color: #fff;
+	left: 50%;
+	margin-left: -20px;
+}
+
+.arrow-bottom:before {
+	border-top-color: #000;
+	left: 50%;
+	margin-left: -21px;
+}
+
+
+.arrow-left:after, .arrow-left:before {
+	right: 100%;
+}
+
+.arrow-left:after {
+	border-right-color: #fff;
+	top: 50%;
+	margin-top: -20px;
+}
+
+.arrow-left:before {
+	border-right-color: #000;
+	top: 50%;
+	margin-top: -21px;
+}
